@@ -83,8 +83,8 @@ trait ResponseCastable
                 $response = new Response(200, [], json_encode($response));
 
                 break;
-            case is_scalar($response):
-                $response = new Response(200, [], $response);
+            case is_string($response) || is_numeric($response):
+                $response = new Response(200, [], (string) $response);
 
                 break;
             default:
