@@ -3,12 +3,18 @@ on: [push, pull_request]
 
 jobs:
   phpstan:
-    name: PHPStan
+    name: PHPStan-${{ matrix.perfer }}
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        perfer:
+          - stable
+          - lowest
     steps:
     - uses: actions/checkout@master
     - name: Install Dependencies
-      run: composer install --no-progress
+      run: composer update --prefer-dist --no-interaction --no-suggest --prefer-${{ matrix.perfer }}
     - name: Run PHPStan
       run: ./vendor/bin/phpstan analyse --no-progress
 
