@@ -13,7 +13,7 @@ jobs:
       run: ./vendor/bin/phpstan analyse --no-progress
 
   php_cs_fixer:
-    name: PHP-CS-Fxier
+    name: PHP-CS-Fxier Check
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
@@ -21,3 +21,20 @@ jobs:
       run: composer install --no-progress
     - name: Run PHP-CS-Fxier
       run: ./vendor/bin/php-cs-fixer fix --dry-run --diff 1>&2
+  
+  php_cs_fixer_auto_fix:
+    name: PHP-CS-Fxier Fix
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Install Dependencies
+      run: composer install --no-progress
+    - name: Run PHP-CS-Fxier
+      run: ./vendor/bin/php-cs-fixer fix --diff 1>&2
+    - name: Commit Changes
+      run: |
+        git config user.email "nauxliu@gmail.com"
+        git config user.name "GitHub Action"
+        git add -A
+        git commit -m 'Fix code style' --allow-empty
+        git push -u origin HEAD

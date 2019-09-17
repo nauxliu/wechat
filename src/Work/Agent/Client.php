@@ -18,8 +18,7 @@ use EasyWeChat\Kernel\BaseClient;
  *
  * @author mingyoung <mingyoungcheung@gmail.com>
  */
-class Client extends BaseClient
-{
+class Client extends BaseClient {
     /**
      * Get agent.
      *
@@ -31,8 +30,8 @@ class Client extends BaseClient
      */
     public function get(int $agentId)
     {
-        $params = [
-            'agentid' => $agentId,
+        $params=[
+            'agentid'=> $agentId,
         ];
 
         return $this->httpGet('cgi-bin/agent/get', $params);
